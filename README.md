@@ -21,6 +21,12 @@ A browsable component docs site · 56 shadcn/ui components wired to Figma-synced
 ![Design systems](https://img.shields.io/badge/design_systems-138-f97316?style=for-the-badge)
 ![Tokens](https://img.shields.io/badge/design_tokens-1806-fbbf24?style=for-the-badge)
 
+<br/>
+
+<img src=".github/assets/docs-site.png" alt="The component documentation site — browsable at /docs with live previews, design tokens, and all 56 components" width="100%" />
+
+<sub>The component docs site at <code>/docs</code> — live previews, design tokens, and all 56 components.</sub>
+
 </div>
 
 ---
