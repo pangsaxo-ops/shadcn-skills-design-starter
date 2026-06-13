@@ -45,6 +45,10 @@ for violations (contrast, roles, names) per variant and per theme.
 
 ## Coverage
 
-Core set (~12 components, 42 stories): Button, Badge, Input, Checkbox, Switch,
-Select, Toggle, Card, Dialog, Tabs, Tooltip, Alert. Each file under
-`stories/ui/` is a CSF3 template — copy one to add the remaining components.
+All 55 components have stories under `stories/ui/` (every `components/ui/*`
+except `direction`, an RTL provider with no visual surface). Each file is a
+CSF3 template — copy the closest one when adding a new component.
+
+> Note: the `:local` dev and build scripts share one mirror dir, so running
+> `build-storybook:local` while `storybook:local` is live will restart the dev
+> server. Run one at a time.
