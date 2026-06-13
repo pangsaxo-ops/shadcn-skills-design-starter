@@ -31,3 +31,6 @@ next-env.d.ts
 
 # Figma REST API cache
 .figma-cache/
+
+*storybook.log
+storybook-static
