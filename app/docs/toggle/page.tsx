@@ -36,6 +36,43 @@ export default function TogglePage() {
       <div className="flex flex-col gap-8">
         <h2 className="text-xl font-semibold tracking-tight">Examples</h2>
         <div className="flex flex-col gap-4">
+          <h3 className="text-base font-semibold">Outline</h3>
+          <ComponentPreview code={`<Toggle variant="outline" aria-label="Toggle italic">
+  <Italic className="size-4" />
+</Toggle>`}>
+            <Toggle variant="outline" aria-label="Toggle italic">
+              <Italic className="size-4" />
+            </Toggle>
+          </ComponentPreview>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <h3 className="text-base font-semibold">With Text</h3>
+          <ComponentPreview code={`<Toggle aria-label="Toggle italic">
+  <Italic className="size-4" />
+  Italic
+</Toggle>`}>
+            <Toggle aria-label="Toggle italic">
+              <Italic className="size-4" />
+              Italic
+            </Toggle>
+          </ComponentPreview>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <h3 className="text-base font-semibold">Sizes</h3>
+          <ComponentPreview code={`<Toggle size="sm"><Bold className="size-4" /></Toggle>
+<Toggle size="default"><Bold className="size-4" /></Toggle>
+<Toggle size="lg"><Bold className="size-4" /></Toggle>`}>
+            <div className="flex flex-wrap items-center gap-3">
+              <Toggle size="sm" aria-label="Small"><Bold className="size-4" /></Toggle>
+              <Toggle size="default" aria-label="Default"><Bold className="size-4" /></Toggle>
+              <Toggle size="lg" aria-label="Large"><Bold className="size-4" /></Toggle>
+            </div>
+          </ComponentPreview>
+        </div>
+
+        <div className="flex flex-col gap-4">
           <h3 className="text-base font-semibold">Toggle Group</h3>
           <ComponentPreview code={`<ToggleGroup type="multiple">
   <ToggleGroupItem value="bold"><Bold /></ToggleGroupItem>

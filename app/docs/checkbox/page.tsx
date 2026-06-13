@@ -66,6 +66,32 @@ export default function CheckboxPage() {
             </div>
           </div>
         </ComponentPreview>
+
+        <div className="flex flex-col gap-4">
+          <h3 className="text-base font-semibold">Card</h3>
+          <ComponentPreview code={`<Label className="flex items-start gap-3 rounded-lg border border-border p-3 has-[[aria-checked=true]]:border-primary has-[[aria-checked=true]]:bg-primary/5">
+  <Checkbox id="card" defaultChecked className="mt-0.5" />
+  <div className="flex flex-col gap-1">
+    <span className="text-sm font-medium leading-none">Enable notifications</span>
+    <span className="text-sm text-muted-foreground">
+      You can enable or disable notifications at any time.
+    </span>
+  </div>
+</Label>`}>
+            <Label
+              htmlFor="card"
+              className="flex max-w-sm items-start gap-3 rounded-lg border border-border p-3 has-[[aria-checked=true]]:border-primary has-[[aria-checked=true]]:bg-primary/5"
+            >
+              <Checkbox id="card" defaultChecked className="mt-0.5" />
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-medium leading-none">Enable notifications</span>
+                <span className="text-sm text-muted-foreground">
+                  You can enable or disable notifications at any time.
+                </span>
+              </div>
+            </Label>
+          </ComponentPreview>
+        </div>
       </div>
     </div>
   )

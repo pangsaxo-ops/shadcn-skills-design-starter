@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { ComponentPreview } from "@/components/docs/component-preview"
 import { CodeBlock } from "@/components/docs/code-block"
+import { BadgeCheckIcon } from "lucide-react"
 
 const INSTALL_CODE = `npx shadcn@latest add badge`
 
@@ -80,6 +81,46 @@ export default function BadgePage() {
               <Badge variant="secondary">Beta</Badge>
               <Badge variant="outline">v1.0.0</Badge>
               <Badge variant="destructive">Deprecated</Badge>
+            </div>
+          </ComponentPreview>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <h3 className="text-base font-semibold">With icon</h3>
+          <ComponentPreview
+            code={`<Badge>
+  <BadgeCheckIcon />
+  Verified
+</Badge>
+<Badge variant="secondary">
+  <BadgeCheckIcon />
+  Pro
+</Badge>`}
+          >
+            <div className="flex flex-wrap gap-3">
+              <Badge>
+                <BadgeCheckIcon data-icon="inline-start" />
+                Verified
+              </Badge>
+              <Badge variant="secondary">
+                <BadgeCheckIcon data-icon="inline-start" />
+                Pro
+              </Badge>
+            </div>
+          </ComponentPreview>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <h3 className="text-base font-semibold">Number</h3>
+          <ComponentPreview
+            code={`<Badge className="h-5 min-w-5 rounded-full px-1 tabular-nums">8</Badge>
+<Badge variant="secondary" className="h-5 min-w-5 rounded-full px-1 tabular-nums">24</Badge>
+<Badge variant="destructive" className="h-5 min-w-5 rounded-full px-1 tabular-nums">99</Badge>`}
+          >
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge className="h-5 min-w-5 rounded-full px-1 tabular-nums">8</Badge>
+              <Badge variant="secondary" className="h-5 min-w-5 rounded-full px-1 tabular-nums">24</Badge>
+              <Badge variant="destructive" className="h-5 min-w-5 rounded-full px-1 tabular-nums">99</Badge>
             </div>
           </ComponentPreview>
         </div>

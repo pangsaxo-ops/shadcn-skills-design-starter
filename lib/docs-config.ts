@@ -47,6 +47,8 @@ export const docsNav: DocNavGroup[] = [
       { title: "Combobox", href: "/docs/combobox" },
       { title: "Command", href: "/docs/command" },
       { title: "Context Menu", href: "/docs/context-menu" },
+      { title: "Data Table", href: "/docs/data-table" },
+      { title: "Date Picker", href: "/docs/date-picker" },
       { title: "Dialog", href: "/docs/dialog" },
       { title: "Drawer", href: "/docs/drawer" },
       { title: "Dropdown Menu", href: "/docs/dropdown-menu" },
