@@ -4,7 +4,7 @@
 
 ### Design-system-first starter for **Figma → Code** at production fidelity
 
-A browsable component docs site · 56 shadcn/ui components wired to Figma-synced tokens · 18 Claude Code design skills · 138 named design systems — all in one repo.
+A browsable component docs site · a Storybook workbench · 56 shadcn/ui components wired to Figma-synced tokens · 18 Claude Code design skills · 138 named design systems — all in one repo.
 
 <br/>
 
@@ -13,10 +13,12 @@ A browsable component docs site · 56 shadcn/ui components wired to Figma-synced
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-new--york-000000?logo=shadcnui&logoColor=white)](https://ui.shadcn.com)
+[![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22c55e)](#-license)
 
 ![Components](https://img.shields.io/badge/components-56-22c55e?style=for-the-badge)
 ![Docs pages](https://img.shields.io/badge/docs_pages-58-14b8a6?style=for-the-badge)
+![Storybook stories](https://img.shields.io/badge/Storybook_stories-55-FF4785?style=for-the-badge)
 ![Claude skills](https://img.shields.io/badge/Claude_skills-18-6366f1?style=for-the-badge)
 ![Design systems](https://img.shields.io/badge/design_systems-138-f97316?style=for-the-badge)
 ![Tokens](https://img.shields.io/badge/design_tokens-1806-fbbf24?style=for-the-badge)
@@ -36,6 +38,7 @@ A browsable component docs site · 56 shadcn/ui components wired to Figma-synced
 - [What is this?](#-what-is-this)
 - [Quick start](#-quick-start)
 - [The component docs site](#-the-component-docs-site)
+- [Storybook (dev & QA)](#-storybook-dev--qa)
 - [Architecture & token pipeline](#-architecture--token-pipeline)
 - [Project structure](#-project-structure)
 - [Workflows](#-workflows)
@@ -57,11 +60,12 @@ A browsable component docs site · 56 shadcn/ui components wired to Figma-synced
 
 ## 🌟 What is this?
 
-This starter is **three products in one repository**:
+This starter is **four products in one repository**:
 
 | | | |
 | :-: | --- | --- |
 | 📖 | **A live component docs site** | Every shadcn/ui component documented at `/docs` — interactive **Preview ⇄ Code** tabs, props tables, and token explorers. |
+| 📕 | **A Storybook workbench** | 55 components in isolation for dev & QA — a 4-mode theme switcher in the toolbar + axe accessibility checks per story. |
 | 🎨 | **A Figma-synced design system** | 1806 tokens, a 3-tier model, and **4 brand modes** that re-theme every component automatically. |
 | 🤖 | **A Claude Code design studio** | 18 skills (build, audit, tokens, a11y, redesign, UX writing, Figma sync) + a library of **138 named design systems**. |
 
@@ -124,6 +128,34 @@ A full documentation site lives under [`app/docs/`](./app/docs), navigable from 
 
 ---
 
+## 📕 Storybook (dev & QA)
+
+A **Storybook 10** workbench (`@storybook/nextjs-vite`) renders every component in isolation — built for the dev and QA teams. It imports `app/globals.css`, so the **exact same Figma-synced tokens** drive every story.
+
+```bash
+npm run storybook          # dev workbench → http://localhost:6006
+npm run build-storybook    # static build → storybook-static/
+```
+
+| Feature | What it gives the team |
+| --- | --- |
+| 🎨 **Theme switcher** | Toolbar dropdown flips all **4 brand modes** (light / dark / primary / secondary) live — applied on `<html>`, so even portals (Dialog, Tooltip, Select) re-theme |
+| ♿ **Accessibility** | `@storybook/addon-a11y` runs axe on each story — contrast, roles, and names per variant and per theme |
+| 📚 **Autodocs** | Every component gets an auto-generated docs page with an interactive controls table |
+| 🧩 **Coverage** | **55 stories** under [`stories/ui/`](./stories/ui) — all `components/ui/*` except `direction` (an RTL provider with no visual surface) |
+
+> [!WARNING]
+> This repo's local folder name contains `[ ]`, which breaks Storybook's glob-based config/story discovery (`SB_CORE-SERVER_0006`). On a normal clone to a bracket-free path the commands above just work. **If** your checkout path contains `[ ]`, use the mirror scripts instead — they symlink the project into a bracket-free temp dir (live edits still reflect):
+>
+> ```bash
+> npm run storybook:local        # dev
+> npm run build-storybook:local  # static build
+> ```
+
+See [`stories/README.md`](./stories/README.md) for the full dev/QA guide.
+
+---
+
 ## 🏗 Architecture & token pipeline
 
 Design intent flows one direction — from Figma all the way to rendered components — so the source of truth is always the design file.
@@ -135,6 +167,7 @@ flowchart LR
     C --> T["Tailwind v4 utilities<br/>bg-primary · gap-4 · rounded-lg"]
     T --> U["56 components<br/>components/ui"]
     U --> D["📖 /docs site"]
+    U --> SB["📕 Storybook<br/>55 stories · 4 modes"]
     J -.->|generate-design-md.py| M["DESIGN.md<br/>spec for humans + AI"]
 ```
 
@@ -157,6 +190,9 @@ shadcn-skills-design-starter/
 ├── components/
 │   ├── ui/                      # 56 shadcn components — CLI-managed, never hand-write
 │   └── docs/                    # docs-site building blocks
+│
+├── .storybook/                  # 📕 Storybook config — globals.css + 4-mode theme switcher
+├── stories/                     # 55 component stories (stories/ui/*.stories.tsx)
 │
 ├── lib/
 │   ├── utils.ts                 # cn() helper (clsx + tailwind-merge)
@@ -420,6 +456,9 @@ Push `"use client"` as deep as possible; keep pages and layouts as Server Compon
 | `npm run dev` | Dev server at http://localhost:3000 |
 | `npm run build` | Production build |
 | `npm run lint` | ESLint |
+| `npm run storybook` | Storybook workbench at http://localhost:6006 |
+| `npm run build-storybook` | Static Storybook build → `storybook-static/` |
+| `npm run storybook:local` | Storybook from a bracket-free mirror (paths with `[ ]`) |
 | `npx shadcn@latest info --json` | Show project config |
 | `npx shadcn@latest add <name>` | Install a component |
 | `python3 scripts/validate-tokens.py` | Verify 1806-token coverage |
