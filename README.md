@@ -2,8 +2,8 @@
 
 # shadcn-skills-design-starter
 
-**Design-system-first starter** — build pixel-perfect UI from Figma to code,<br/>
-powered by shadcn/ui, Tailwind CSS v4, Next.js 15, and Claude Code.
+**Design-system-first starter** — a browsable component docs site, 56 shadcn/ui<br/>
+components wired to Figma-synced tokens, and 18 Claude Code design skills.
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js&logoColor=white)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev)
@@ -11,17 +11,41 @@ powered by shadcn/ui, Tailwind CSS v4, Next.js 15, and Claude Code.
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-new--york-000000?logo=shadcnui&logoColor=white)](https://ui.shadcn.com)
 
+<br/>
+
+![Components](https://img.shields.io/badge/components-56-22c55e?style=flat-square)
+![Docs pages](https://img.shields.io/badge/docs_pages-58-14b8a6?style=flat-square)
+![Design skills](https://img.shields.io/badge/Claude_skills-18-6366f1?style=flat-square)
+![Design systems](https://img.shields.io/badge/design_systems-138-f97316?style=flat-square)
+![Tokens](https://img.shields.io/badge/design_tokens-1806-fbbf24?style=flat-square)
+
 </div>
 
 ---
 
 ## Overview
 
-This starter ships a fully wired design system — 1806 design tokens exported from Figma, strict Figma-to-code workflow enforced by a Claude Code skill, and four brand modes that switch automatically across every component.
+This starter is three things in one:
+
+1. **A live component docs site** — every shadcn/ui component documented with interactive previews, code, and props at `/docs`.
+2. **A Figma-synced design system** — 1806 design tokens, 4 brand modes that switch automatically, a strict Figma-to-code workflow.
+3. **A Claude Code design studio** — 18 skills (build, audit, tokens, a11y, redesign, 138 named design systems) loaded into the project.
 
 ```
-Figma ──▶ variables-export.json ──▶ app/globals.css ──▶ Tailwind utilities ──▶ Components
+Figma ──▶ variables-export.json ──▶ app/globals.css ──▶ Tailwind utilities ──▶ Components ──▶ /docs
 ```
+
+---
+
+## Highlights
+
+| | |
+| --- | --- |
+| 🧩 **56 components** | Every shadcn/ui component installed and documented — incl. sidebar, combobox, field, empty, input-group, kbd, spinner, native-select |
+| 📖 **Docs site** | Browsable at `/docs` — preview/code tabs, props tables, token explorers (colors · typography · radius) |
+| 🎨 **1806 tokens · 4 modes** | light · dark · primary (blue) · secondary (yellow) — re-theme every component from one tier |
+| 🤖 **18 Claude skills** | Build, review, tokens, a11y, performance, redesign, UX writing, Figma sync + 138 design systems |
+| 🔌 **Figma workflows** | Dev Mode MCP for design-to-code, plus a REST fallback script when MCP is rate-limited |
 
 ---
 
@@ -34,8 +58,8 @@ Figma ──▶ variables-export.json ──▶ app/globals.css ──▶ Tailwi
 | Styling | Tailwind CSS v4 · `@theme inline` · no config file |
 | UI library | shadcn/ui · new-york style · Lucide icons |
 | Theme | 4 brand modes: light · dark · primary · secondary |
-| Design source | Figma Dev Mode MCP |
-| AI workflow | Claude Code + custom skill |
+| Design source | Figma Dev Mode MCP (+ REST fallback) |
+| AI workflow | Claude Code + 18 design skills |
 | Token source | `assets/variables-export.json` · 1806 variables |
 
 ---
@@ -49,7 +73,36 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open **[http://localhost:3000](http://localhost:3000)** → redirects to the component docs site at `/docs`.
+
+> **Figma REST (optional):** copy your token into `.env.local` as `FIGMA_ACCESS_TOKEN=…`. It is gitignored — never commit it.
+
+---
+
+## The component docs site
+
+A full documentation site lives under `app/docs/`, navigable from the sidebar in three groups:
+
+| Group | Pages |
+| --- | --- |
+| **Getting Started** | Introduction |
+| **Design Tokens** | Colors (35 semantic × 4 modes) · Typography · Border Radius |
+| **Components** | All 56 — each with **Preview / Code** tabs, installation, usage, examples, props |
+
+Built from:
+
+```
+components/docs/
+├── sidebar-nav.tsx          # left navigation (active-route aware)
+├── component-preview.tsx    # Preview ⇄ Code tabbed wrapper
+├── code-block.tsx           # syntax-styled code
+├── color-palette.tsx        # click-to-copy swatches
+├── semantic-tokens-panel.tsx# mode switcher + all-modes table
+└── mode-switcher.tsx        # light / dark / primary / secondary
+
+lib/docs-config.ts           # the docs nav tree (add a page here)
+lib/tokens-data.ts           # token extraction for the token pages
+```
 
 ---
 
@@ -58,68 +111,53 @@ Open [http://localhost:3000](http://localhost:3000)
 ```
 shadcn-skills-design-starter/
 │
-├── app/                         # Next.js App Router
-│   ├── layout.tsx               # ThemeProvider · metadata · root layout
-│   ├── page.tsx                 # entry route (replace with your Figma screen)
-│   └── globals.css              # all design tokens — generated, do not edit
+├── app/
+│   ├── layout.tsx               # ThemeProvider · next/font · metadata
+│   ├── page.tsx                 # redirects → /docs
+│   ├── globals.css              # ALL design tokens — generated, do not edit by hand
+│   └── docs/                    # the component documentation site (58 pages)
 │
 ├── components/
-│   └── ui/                      # shadcn CLI-managed — never hand-write
+│   ├── ui/                      # 56 shadcn components — CLI-managed, never hand-write
+│   └── docs/                    # docs-site building blocks
 │
 ├── lib/
-│   └── utils.ts                 # cn() helper (clsx + tailwind-merge)
+│   ├── utils.ts                 # cn() helper (clsx + tailwind-merge)
+│   ├── docs-config.ts           # docs navigation tree
+│   └── tokens-data.ts           # token data for docs
 │
-├── hooks/                       # custom hooks — always "use client"
+├── hooks/                       # use-mobile + custom hooks ("use client")
 │
 ├── assets/
 │   └── variables-export.json    # 1806 design tokens · 17 collections · 4 modes
 │
-├── references/
-│   ├── component-examples.md    # copy-paste patterns (forms, tables, dialogs…)
-│   └── links.md                 # shadcn · Next.js · Figma · Radix · Lucide
-│
 ├── scripts/
 │   ├── export-globals-css.py    # rebuild app/globals.css from token JSON
 │   ├── generate-design-md.py    # rebuild DESIGN.md from token JSON
-│   └── validate-tokens.py       # verify all 1806 tokens are documented
+│   ├── validate-tokens.py       # verify all 1806 tokens are documented
+│   └── fetch-figma-node.js      # Figma REST helper (token from .env.local)
 │
-├── .claude/
-│   └── skills/shadcn-ui/
-│       └── SKILL.md             # Claude Code UI build skill (auto-triggered)
+├── .claude/skills/              # 18 Claude Code skills (see below)
+│
+├── ux-ui-agent-skills/          # bundled design kit (138 systems, tokens, scripts)
 │
 ├── CLAUDE.md                    # Claude Code instructions — loaded every session
-├── AGENTS.md                    # Instructions for all AI agents
-└── DESIGN.md                    # Complete design system spec (1806 tokens)
+├── AGENTS.md                    # instructions for all AI agents
+└── DESIGN.md                    # complete design system spec (1806 tokens)
 ```
 
 ---
 
 ## Design tokens
 
-All tokens live in `assets/variables-export.json`, exported from Figma using the **lazyyysync-variables-v1** format.
-
-### 17 collections · 1806 variables
-
-| Collection | Variables | Type |
-| --- | --- | --- |
-| shadcn/ui | 35 × 4 modes | Semantic color tokens |
-| tw/colors | 244 | Tailwind raw palette |
-| rdx/colors | 396 | Radix raw palette (light + dark) |
-| tokens | 87 | Base numeric primitives |
-| border-radius | 150 | All directional variants |
-| border-width | 45 | All directional variants |
-| font | 45 | Family · size · weight · leading |
-| gap / margin / padding | 102 + 245 + 245 | Spacing |
-| height / max-height / max-width | 24 + 35 + 51 | Sizing |
-| space / stroke-width / opacity | 68 + 11 + 21 | Utilities |
-| fontUse | 2 | Typography style |
+All tokens live in `assets/variables-export.json`, exported from Figma in the **lazyyysync-variables-v1** format.
 
 ### 4 brand modes — tokens switch automatically
 
 | Mode | CSS selector | Colors |
 | --- | --- | --- |
-| `light mode` | `:root` | Neutral default |
-| `dark mode` | `.dark` | Neutral dark |
+| `light` | `:root` | Neutral default |
+| `dark` | `.dark` | Neutral dark |
 | `primary` | `[data-theme="primary"]` | Blue brand |
 | `secondary` | `[data-theme="secondary"]` | Yellow brand |
 
@@ -138,7 +176,7 @@ Tier 3 — Utilities    bg-primary · text-muted-foreground · gap-4 · rounded-
 
 > Change a **Tier 2** variable → every component re-themes automatically across all four modes.
 
-### Regenerate after Figma export
+### Regenerate after a Figma export
 
 ```bash
 python3 scripts/export-globals-css.py    # rebuild app/globals.css (4 modes)
@@ -148,33 +186,27 @@ python3 scripts/validate-tokens.py       # verify all 1806 tokens present
 
 ---
 
-## Adding UI components
+## Claude Code design skills
 
-```bash
-# Search registry first
-npx shadcn@latest search <query>
+18 skills are installed in `.claude/skills/` and load automatically in Claude Code. One is project-native (`shadcn-ui`); the other 17 come from the bundled [`ux-ui-agent-skills`](./ux-ui-agent-skills) kit and reference its tokens / scripts / 138 design systems.
 
-# Install components
-npx shadcn@latest add button
-npx shadcn@latest add button card dialog form table
+| Skill | Use it to… |
+| --- | --- |
+| **shadcn-ui** | Build/review shadcn + Tailwind v4 + Next.js UI to this project's rules *(project-native)* |
+| **design-tokens** · **token-build** · **brandkit** | Generate/validate DTCG tokens · build platform artifacts · create a brand system |
+| **design-component** · **design-code** · **image-to-code** | Spec a component · generate any-framework code · turn a screenshot into code |
+| **apply-aesthetic** · **redesign** | Apply one of 138 design systems (Apple, Linear, Stripe…) · upgrade an existing UI |
+| **design-review** · **design-qa** · **a11y-audit** · **performance** | Critique · CI gates · WCAG 2.2 audit · Core Web Vitals |
+| **figma-integration** · **migrate-design-system** | Sync tokens ↔ Figma Variables · bridge Material/HIG/Fluent/Carbon… |
+| **governance** · **prototype** · **ux-writing** | Versioning & contribution · fidelity ladder · UI copy |
 
-# Community registries
-npx shadcn@latest add @magicui/shimmer-button
-
-# Preview before applying
-npx shadcn@latest add button --dry-run
-npx shadcn@latest add button --diff
-```
-
-> Never hand-write files inside `components/ui/` — always use the CLI.
+> Triggers can overlap — for this project's app code, `shadcn-ui` is the primary skill.
 
 ---
 
 ## Figma → Code workflow
 
-Enforced by `.claude/skills/shadcn-ui/SKILL.md` — Claude Code auto-triggers this skill when working with Figma nodes or shadcn components.
-
-### 6 steps — mandatory order, never skip
+Enforced by `.claude/skills/shadcn-ui/SKILL.md`, auto-triggered on Figma nodes or shadcn work.
 
 ```
 Step 1   get_design_context(<node-id>)   structure + token names
@@ -185,8 +217,6 @@ Step 5   Implement against inventory     no extras, no omissions, no guessing
 Step 6   Validate against screenshot     check each inventory item matches
 ```
 
-### Fidelity contract
-
 | Rule | Meaning |
 | --- | --- |
 | **No adding** | If Figma doesn't show it — don't code it |
@@ -194,45 +224,45 @@ Step 6   Validate against screenshot     check each inventory item matches
 | **No inferring** | Uncertain value → stop and ask |
 | **No polishing** | Honour the design, don't improve it |
 
----
+### REST fallback (when the MCP is rate-limited)
 
-## Claude Code integration
-
-This project is built for [Claude Code](https://claude.ai/code). Three files load automatically:
-
-| File | When | Purpose |
-| --- | --- | --- |
-| `CLAUDE.md` | Every session | Stack · hard rules · commands |
-| `DESIGN.md` | On demand | 1806 tokens · composition rules · Next.js patterns |
-| `.claude/skills/shadcn-ui/SKILL.md` | Auto-triggered | Build · Figma→code · review · suggest |
-
-The skill auto-triggers when working with shadcn components, Tailwind classes, `globals.css`, Figma nodes, or `app/` files.
-
----
-
-## Next.js App Router rules
-
-```tsx
-// Default → Server Component (no directive needed)
-export default async function Page() {
-  const data = await fetch("…")
-  return <Component data={data} />
-}
-
-// Needs hooks / events / browser APIs → Client Component
-"use client"                              // must be FIRST line
-import { useState } from "react"
-
-// Server Action → first line of file
-"use server"
-export async function save(fd: FormData) { … }
+```bash
+node scripts/fetch-figma-node.js --search <term> <fileKey> <rootNodeId>   # find a node by name
+node scripts/fetch-figma-node.js <nodeId> [fileKey]                       # fetch JSON + PNG
 ```
 
-Push `"use client"` as deep as possible — keep pages and layouts as Server Components.
+Reads `FIGMA_ACCESS_TOKEN` from `.env.local`; output lands in `.figma-cache/` (gitignored).
 
 ---
 
-## Styling rules
+## Adding UI components
+
+```bash
+npx shadcn@latest search <query>          # search the registry
+npx shadcn@latest add button card dialog  # install
+npx shadcn@latest add button --dry-run    # preview
+npx shadcn@latest add button --diff       # diff before overwrite
+```
+
+> Never hand-write files inside `components/ui/` — always use the CLI. After adding, document it: create `app/docs/<name>/page.tsx` and register it in `lib/docs-config.ts`.
+
+---
+
+## Conventions
+
+### Next.js App Router
+
+```tsx
+// Default → Server Component (no directive)
+export default async function Page() { … }
+
+"use client"   // FIRST line — only for hooks / events / browser APIs
+"use server"   // FIRST line — Server Actions
+```
+
+Push `"use client"` as deep as possible; keep pages and layouts as Server Components.
+
+### Styling
 
 ```
 DO                                    DON'T
@@ -240,7 +270,7 @@ DO                                    DON'T
 bg-primary text-muted-foreground      bg-blue-500 text-gray-900
 flex flex-col gap-4                   flex flex-col space-y-4
 size-10                               w-10 h-10
-cn("base", isActive && "bg-primary")  `base ${isActive && "bg-primary"}`
+cn("base", isActive && "bg-primary")  `base ${isActive && "…"}`
 <Image src="…" />                     <img src="…" />
 app/globals.css only                  new .css files anywhere
 npx shadcn@latest add <name>          hand-writing components/ui/*
@@ -250,15 +280,17 @@ npx shadcn@latest add <name>          hand-writing components/ui/*
 
 ## Scripts
 
-| Script | What it does |
+| Command | What it does |
 | --- | --- |
-| `npm run dev` | Start dev server at http://localhost:3000 |
+| `npm run dev` | Dev server at http://localhost:3000 |
 | `npm run build` | Production build |
 | `npm run lint` | ESLint |
 | `npx shadcn@latest info --json` | Show project config |
-| `python3 scripts/validate-tokens.py` | Verify 1806 token coverage |
+| `python3 scripts/validate-tokens.py` | Verify 1806-token coverage |
 | `python3 scripts/export-globals-css.py` | Regenerate CSS from token JSON |
-| `python3 scripts/generate-design-md.py` | Regenerate DESIGN.md |
+| `node scripts/fetch-figma-node.js …` | Fetch a Figma node via REST |
+
+> ⚠️ Don't run `npm run build` while `npm run dev` is running — they share `.next` and the dev cache can corrupt (CSS 404s / "Cannot find module"). If it happens: stop dev, `rm -rf .next`, restart.
 
 ---
 
@@ -270,6 +302,11 @@ npx shadcn@latest add <name>          hand-writing components/ui/*
 | Next.js App Router | [nextjs.org/docs/app](https://nextjs.org/docs/app) |
 | Tailwind CSS v4 | [tailwindcss.com](https://tailwindcss.com) |
 | Figma Dev Mode MCP | [figma.com/blog](https://www.figma.com/blog/introducing-figmas-dev-mode-mcp-server/) |
+| ux-ui-agent-skills | [github.com/plugin87/ux-ui-agent-skills](https://github.com/plugin87/ux-ui-agent-skills) |
 | Claude Code | [claude.ai/code](https://claude.ai/code) |
-| All links | [`references/links.md`](./references/links.md) |
-| Component examples | [`references/component-examples.md`](./references/component-examples.md) |
+
+---
+
+## License
+
+MIT. The bundled [`ux-ui-agent-skills`](./ux-ui-agent-skills) kit is MIT-licensed by [plugin87](https://github.com/plugin87/ux-ui-agent-skills).
