@@ -146,7 +146,7 @@
   --muted-foreground: #facc15;
   --accent: #a16207;
   --accent-foreground: #fefce8;
-  --destructive: #dc2626;
+  --destructive: #fecaca; /* a11y: #dc2626 was 1.80:1 on secondary bg (FAIL) — #fecaca = 5.99:1 AA pass. Back-port to Figma source. */
   --border: #a16207;
   --input: #713f12;
   --ring: #fefce8;
